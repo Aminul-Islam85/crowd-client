@@ -1,7 +1,6 @@
-import { Link } from "react-router-dom"; 
+import { Link } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../config/firebase";
-import { FaUserCircle } from "react-icons/fa"; // Import User Icon
 
 const Navbar = () => {
   const [user] = useAuthState(auth);
@@ -25,30 +24,35 @@ const Navbar = () => {
         {/* Protected Routes: Show only when user is logged in */}
         {user && (
           <>
-            <Link to="/add-campaign" className="btn btn-outline btn-primary">Add Campaign</Link>
+            <Link to="/add-campaign" className="btn btn-outline btn-secondary">Add Campaign</Link>
             <Link to="/my-campaigns" className="btn btn-outline btn-secondary">My Campaigns</Link>
             <Link to="/my-donations" className="btn btn-outline btn-primary">My Donations</Link>
-
-            {/* User Icon with Hover Details */}
-            <div className="relative group flex items-center">
-              <FaUserCircle className="text-3xl text-primary cursor-pointer" />
-              <div className="absolute hidden group-hover:block bg-white p-2 rounded shadow-md right-0 mt-2">
-                <p className="text-sm font-semibold">{user.displayName || "User"}</p>
-                <p className="text-xs text-gray-600">{user.email}</p>
-              </div>
-            </div>
-
-            {/* Log Out Button */}
-            <button onClick={handleLogout} className="btn btn-error">Log Out</button>
           </>
         )}
 
         {/* Conditional Login/Register */}
-        {!user && (
+        {!user ? (
           <>
             <Link to="/login" className="btn btn-primary">Login</Link>
             <Link to="/register" className="btn btn-outline btn-primary">Register</Link>
           </>
+        ) : (
+          // If logged in, show user avatar & log out button
+          <div className="flex items-center gap-3">
+            <div className="relative group">
+              {/* User Avatar with Hover Tooltip */}
+              <img
+                src={user.photoURL || "https://via.placeholder.com/40"}
+                alt="User Avatar"
+                className="w-10 h-10 rounded-full cursor-pointer border border-gray-300 shadow-sm"
+              />
+              <div className="absolute left-0 mt-1 bg-white text-gray-800 text-sm px-2 py-1 rounded shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                <p className="font-semibold">{user.displayName || "User"}</p>
+                <p className="text-xs text-gray-600">{user.email}</p>
+              </div>
+            </div>
+            <button onClick={handleLogout} className="btn btn-error">Log Out</button>
+          </div>
         )}
       </div>
     </nav>
