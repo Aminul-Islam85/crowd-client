@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar"; 
-import Footer from "./components/Footer"; // ✅ Import Footer Component
+import Footer from "./components/Footer";  // ✅ Import Footer
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./config/firebase";
 import { AuthProvider } from "./context/AuthContext";
@@ -13,6 +13,8 @@ import Campaigns from "./pages/Campaigns";
 import CampaignDetails from "./pages/CampaignDetails";
 import MyDonations from "./pages/MyDonations";
 import MyCampaigns from "./pages/MyCampaigns";
+import Footer from "./components/Footer";
+import NotFound from "./pages/NotFound"; // ✅ Import 404 Page
 
 const PrivateRoute = ({ children }) => {
   const [user] = useAuthState(auth);
@@ -24,7 +26,8 @@ function App() {
   return (
     <AuthProvider>
       <Router>
-        <Navbar />
+        <Navbar /> {/* ✅ Navbar remains on all pages */}
+
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
@@ -34,11 +37,20 @@ function App() {
           <Route path="/campaigns/:id" element={<CampaignDetails />} />
           <Route path="/my-donations" element={<PrivateRoute><MyDonations /></PrivateRoute>} />
           <Route path="/my-campaigns" element={<PrivateRoute><MyCampaigns /></PrivateRoute>} />
+          <Route path="*" element={<NotFound />} /> {/* ✅ 404 Page */}
         </Routes>
-        <Footer /> {/* ✅ Place Footer outside Routes so it appears on all pages */}
+
+        {/* ✅ Show Footer on all pages except 404 */}
+        <FooterWrapper />
       </Router>
     </AuthProvider>
   );
 }
+
+// ✅ Helper function to conditionally show the Footer
+const FooterWrapper = () => {
+  const location = useLocation();
+  return location.pathname !== "*" ? <Footer /> : null;
+};
 
 export default App;
