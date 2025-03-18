@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "../context/AuthContext"; // Ensure AuthContext for user data
+import { useAuth } from "../context/AuthContext";
 import { Link } from "react-router-dom";
 
 const Dashboard = () => {
-  const { user } = useAuth(); // Get logged-in user info
+  const { user } = useAuth();
   const [campaigns, setCampaigns] = useState([]);
   const [totalFunds, setTotalFunds] = useState(0);
   const [activeCampaigns, setActiveCampaigns] = useState(0);
@@ -26,7 +26,7 @@ const Dashboard = () => {
         }, 0);
         setTotalFunds(total);
 
-        // Count Active Campaigns (based on deadline)
+        // Count Active Campaigns
         const active = data.filter((campaign) => new Date(campaign.deadline) > new Date()).length;
         setActiveCampaigns(active);
       } catch (err) {
@@ -41,9 +41,9 @@ const Dashboard = () => {
 
   return (
     <div className="p-6">
-      <h1 className="text-3xl font-bold text-primary text-center mb-6">My Dashboard</h1>
+      <h1 className="text-3xl font-bold text-primary text-center mb-6">Dashboard</h1>
 
-      {/* 📊 Stats Overview */}
+      {/* 📊 Stats Section */}
       <div className="grid md:grid-cols-3 gap-6 text-center">
         <div className="p-4 bg-white shadow-md rounded-lg">
           <h2 className="text-lg font-semibold">Total Campaigns</h2>
@@ -59,7 +59,7 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* 🔹 Buttons Moved for Better UI */}
+      {/* 🔹 Buttons Now Moved Near the Title */}
       <div className="flex justify-between items-center mt-8">
         <h2 className="text-2xl font-bold text-primary">My Campaigns</h2>
         <div className="flex gap-4">
