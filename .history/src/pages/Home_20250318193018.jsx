@@ -39,10 +39,7 @@ const Home = () => {
     fetchCampaigns();
   }, []);
 
-  // ✅ Get Running Campaigns (Deadline Not Passed)
-  const runningCampaigns = campaigns.filter(campaign => new Date(campaign.deadline) > new Date()).slice(0, 6);
-
-  // ✅ Carousel Settings
+  // Carousel Settings
   const sliderSettings = {
     dots: true,
     infinite: true,
@@ -102,31 +99,6 @@ const Home = () => {
               </div>
             ))}
           </Slider>
-
-          {/* ✅ Running Campaigns Section */}
-          <h2 className="text-2xl font-bold text-primary mt-12 text-center">Running Campaigns</h2>
-          <div className="grid md:grid-cols-3 gap-6 mt-4">
-            {runningCampaigns.length > 0 ? (
-              runningCampaigns.map((campaign) => (
-                <div key={campaign._id} className="card w-96 bg-white shadow-lg border rounded-lg">
-                  <figure>
-                    <img src={campaign.image} alt={campaign.title} className="w-full h-40 object-cover rounded-t-lg" />
-                  </figure>
-                  <div className="p-4">
-                    <h2 className="text-xl font-semibold text-primary">{campaign.title}</h2>
-                    <p className="text-gray-600">Goal: ${campaign.goal}</p>
-                    <p className="text-gray-600">Raised: ${campaign.donations?.reduce((sum, d) => sum + d.amount, 0) || 0}</p>
-                    <p className="text-gray-600">Deadline: {new Date(campaign.deadline).toLocaleDateString()}</p>
-                    <Link to={`/campaigns/${campaign._id}`} className="btn btn-primary mt-3 w-full">
-                      See More
-                    </Link>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <p className="text-gray-500 text-center mt-4">No active campaigns at the moment.</p>
-            )}
-          </div>
 
           {/* Extra Sections */}
           <div className="mt-12 grid md:grid-cols-2 gap-6">
