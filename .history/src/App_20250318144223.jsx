@@ -2,8 +2,6 @@ import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "r
 import Navbar from "./components/Navbar"; 
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./config/firebase";
-import { AuthProvider } from "./context/AuthContext";
-
 import Home from "./pages/Home";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
@@ -26,8 +24,7 @@ const PrivateRoute = ({ children }) => {
 
 function App() {
   return (
-    <AuthProvider>
-      <Router>
+    <Router>
       <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -39,7 +36,6 @@ function App() {
           <Route path="/my-donations" element={<PrivateRoute><MyDonations /></PrivateRoute>} />
         </Routes>
     </Router>
-    </AuthProvider>
   );
 }
 
