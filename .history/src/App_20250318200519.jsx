@@ -5,7 +5,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./config/firebase";
 import { AuthProvider } from "./context/AuthContext";
 import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css"; 
+import "react-toastify/dist/ReactToastify.css"; // ✅ Import Toastify CSS
 
 import Home from "./pages/Home";
 import Login from "./pages/auth/Login";
@@ -15,7 +15,6 @@ import Campaigns from "./pages/Campaigns";
 import CampaignDetails from "./pages/CampaignDetails";
 import MyDonations from "./pages/MyDonations";
 import MyCampaigns from "./pages/MyCampaigns";
-import NotFound from "./pages/NotFound";  // ✅ Import 404 Page
 
 const PrivateRoute = ({ children }) => {
   const [user] = useAuthState(auth);
@@ -27,7 +26,7 @@ function App() {
   return (
     <AuthProvider>
       <Router>
-        <ToastContainer position="top-right" autoClose={3000} />
+        <ToastContainer position="top-right" autoClose={3000} /> {/* ✅ Global Toast Notifications */}
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -38,9 +37,8 @@ function App() {
           <Route path="/campaigns/:id" element={<CampaignDetails />} />
           <Route path="/my-donations" element={<PrivateRoute><MyDonations /></PrivateRoute>} />
           <Route path="/my-campaigns" element={<PrivateRoute><MyCampaigns /></PrivateRoute>} />
-          <Route path="*" element={<NotFound />} /> {/* ✅ Catch all unmatched routes */}
         </Routes>
-        <Footer />
+        <Footer /> {/* ✅ Footer appears on all pages */}
       </Router>
     </AuthProvider>
   );
