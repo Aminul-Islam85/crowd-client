@@ -21,7 +21,7 @@ const Navbar = () => {
       <div className="flex flex-wrap items-center space-x-2 md:space-x-4">
         <Link to="/" className="btn btn-secondary text-sm md:text-base">Home</Link>
         <Link to="/campaigns" className="btn btn-primary text-sm md:text-base">All Campaigns</Link>
-        
+        <button className="btn btn-outline btn-primary text-sm md:text-base">Login</button>
 
         
         {user && (

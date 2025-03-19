@@ -5,7 +5,7 @@ const Campaigns = () => {
   const [campaigns, setCampaigns] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [sortOrder, setSortOrder] = useState("asc"); 
+  const [sortOrder, setSortOrder] = useState("asc"); // 🔼 "asc" for ascending, "desc" for descending
 
   useEffect(() => {
     const fetchCampaigns = async () => {
@@ -24,16 +24,16 @@ const Campaigns = () => {
     fetchCampaigns();
   }, []);
 
-  
+  // 🔄 Sorting Function
   const handleSort = () => {
     const sortedCampaigns = [...campaigns].sort((a, b) => {
       return sortOrder === "asc"
-        ? a.minDonation - b.minDonation 
-        : b.minDonation - a.minDonation;
+        ? a.minDonation - b.minDonation // Ascending
+        : b.minDonation - a.minDonation; // Descending
     });
 
     setCampaigns(sortedCampaigns);
-    setSortOrder(sortOrder === "asc" ? "desc" : "asc"); 
+    setSortOrder(sortOrder === "asc" ? "desc" : "asc"); // Toggle order
   };
 
   if (loading) return <p className="text-center text-gray-600">Loading campaigns...</p>;
@@ -43,14 +43,14 @@ const Campaigns = () => {
     <div className="p-6">
       <h1 className="text-4xl font-bold text-primary text-center">All Campaigns</h1>
 
-      
+      {/* 🔽 Sort Button */}
       <div className="flex justify-center mt-4">
         <button onClick={handleSort} className="btn btn-primary">
           Sort by Min Donation {sortOrder === "asc" ? "🔼" : "🔽"}
         </button>
       </div>
 
-      
+      {/* 📌 Display Campaigns */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
         {campaigns.map((campaign) => (
           <div key={campaign._id} className="card w-96 bg-white shadow-lg border rounded-lg">
